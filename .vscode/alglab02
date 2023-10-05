@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class IdealBodyWeightCalculator {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the height in feet: ");
+        int feet = scanner.nextInt();
+
+        System.out.print("Enter the additional inches: ");
+        int inches = scanner.nextInt();
+
+        int idealBodyWeight = calculateIdealBodyWeight(feet, inches);
+
+        System.out.println("User's height: " + feet + " feet " + inches + " inches");
+        System.out.println("Calculated ideal body weight: " + idealBodyWeight + " pounds");
+    }
+
+    public static int calculateIdealBodyWeight(int feet, int inches) {
+        // Convert feet to inches and add additional inches
+        int totalHeightInInches = (feet * 12) + inches;
+
+        // Calculate the number of additional inches above 60 inches (5 feet)
+        int additionalInches = totalHeightInInches - 60;
+
+        // Calculate the ideal body weight
+        int idealBodyWeight = 110 + (additionalInches * 5);
+
+        return idealBodyWeight;
+    }
+}
