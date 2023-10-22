@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rain Money Game</title>
+    <style>
+        body {
+            background-color: #87CEEB; /* Set the background color to sky blue */
+            overflow: hidden; /* Hide overflow to prevent scrolling */
+        }
+
+        .money {
+            position: absolute;
+            font-size: 20px;
+            color: #00FF00; /* Set the color of the money (green) */
+            user-drag: none; /* Prevent text selection */
+        }
+
+        .jar {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background-color: #FFD700; /* Color of the jar (gold) */
+            border-radius: 50%;
+            user-drag: none; /* Prevent text selection */
+        }
+    </style>
+</head>
+<body>
+    <div class="jar"></div>
+
+    <script>
+        // Function to create money falling from the top of the page
+        function createMoney() {
+            const money = document.createElement('div');
+            money.classList.add('money');
+            money.innerHTML = '$';
+            document.body.appendChild(money);
+
+            const startPosition = Math.random() * window.innerWidth;
+            const fallSpeed = Math.random() * 5 + 2; // Adjust the speed as needed
+
+            money.style.left = startPosition + 'px';
+
+            // Animate the money falling
+            let topPosition = 0;
+            const moneyInterval = setInterval(() => {
+                if (topPosition >= window.innerHeight) {
+                    money.remove();
+                    clearInterval(moneyInterval);
+                } else {
+                    topPosition += fallSpeed;
+                    money.style.top = topPosition + 'px';
+
+                    // Check if money is collected in the jar
+                    if (
+                        topPosition >= window.innerHeight - 100 && // Jar's top boundary
+                        startPosition >= window.innerWidth / 2 - 50 && // Jar's left boundary
+                        startPosition <= window.innerWidth / 2 + 50 // Jar's right boundary
+                    ) {
+                        money.remove();
+                        clearInterval(moneyInterval);
+                    }
+                }
+            }, 10);
+        }
+
+        // Create money periodically
+        const moneyInterval = setInterval(createMoney, 1000);
+
+        // Stop creating money after a certain time (e.g., 30 seconds)
+        setTimeout(() => {
+            clearInterval(moneyInterval);
+        }, 30000);
+    </script>
+</body>
+</html>
